@@ -1,0 +1,38 @@
+@use "sass:math";
+
+@import "decimal";
+
+@function color-contrast-ratio($fg, $bg, $ratio: 0.05) {
+  $fg-lum: color-luminance($fg) +  0.05;
+  $bg-lum: color-luminance($bg) +  0.05;
+
+  @if $bg-lum > $fg-lum {
+    $ratio: math.div($bg-lum, $fg-lum);
+  } @else {
+    $ratio: math.div($fg-lum, $bg-lum);
+  }
+
+  $ratio: decimal-round($ratio, 2);
+
+  @return $ratio;
+}
+
+@function color-is-light($color) {
+  @return color-contrast-ratio($color, #fff) < color-contrast-ratio($color, #000);
+}
+
+@function color-luminance($c) {
+  $rlin: color-de-gamma(math.div(red($c), 255));
+  $glin: color-de-gamma(math.div(green($c), 255));
+  $blin: color-de-gamma(math.div(blue($c), 255));
+  @return 0.2126 * $rlin + 0.7152 * $glin + 0.0722 * $blin;
+}
+
+@function color-de-gamma($n) {
+  @if $n <= 0.03928 {
+    @return math.div($n, 12.92);
+  } @else {
+    @return math.pow((math.div(($n + 0.055), 1.055)), 2.4);
+  }
+}
+

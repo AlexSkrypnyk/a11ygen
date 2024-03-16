@@ -1,0 +1,85 @@
+@use "sass:math";
+@use "sass:color";
+
+@import "lib/stepper";
+
+@mixin generate-colors($total-colors, $is_light_background: true) {
+  $card-index: 0;
+  $hue-delta: math.div(360, $total-colors + 1);
+  $index: 0;
+
+  @for $card-index from 1 through $total-colors {
+    &:nth-child(#{$card-index}) {
+      $outer: color.adjust($bg-color, $hue: $hue-delta * ($card-index - 1));
+      $inner: $outer;
+      $border: $outer;
+
+      @debug '---------- #{$outer} [#{$card-index}] ----------';
+
+      // Normalise given colour from the top.
+      $inner: color-stepper($outer, $text-color, $ratio: 7, $autodark: true);
+      // Calculate outer colour.
+      $outer: color-stepper($inner, $inner, $ratio: $inner-to-outer-ratio, $step: 1%);
+      // Calculate border colour as a contrast to the inner colour.
+      $border: color-stepper($inner, $outer, $ratio: 7, $autodark: true);
+
+      @if $card-index == 1 {
+        $color: $outer;
+      }
+
+      background-color: $outer;
+
+      .inner {
+        background-color: $inner;
+        border-color: $border;
+      }
+
+      @include show-values($outer, $border, $inner, $text-color);
+    }
+  }
+}
+
+@mixin show-values($o, $b, $i, $t) {
+  &:after {
+    color: #000000;
+    content: 'O: ' + $o;
+    font-family: monospace;
+    left: 0;
+    position: absolute;
+    text-align: left;
+    top: 100%;
+    width: 100%;
+  }
+
+  $ot: color-contrast-ratio($o, $text-color);
+  @if $ot >= 7 {
+    $ot: $ot + ' OK';
+  }
+
+  $it: color-contrast-ratio($i, $text-color);
+  @if $it >= 7 {
+    $it: $it + ' OK';
+  }
+
+  $contrast: 'O-B: ' + color-contrast-ratio($o, $b);
+  $contrast: $contrast + '\a I-B: ' + color-contrast-ratio($b, $i);
+  $contrast: $contrast + '\a O-I: ' + color-contrast-ratio($o, $i);
+  $contrast: $contrast + '\a O-T: ' + $ot;
+  $contrast: $contrast + '\a I-T: ' + $it;
+
+  .inner {
+    &:first-child {
+      &:after {
+        color: #000000;
+        content: 'B: ' + $b + '\a I: ' + $i + '\a' + $contrast;
+        font-family: monospace;
+        left: 0;
+        position: absolute;
+        text-align: left;
+        top: 105%;
+        white-space: pre;
+        width: 100%;
+      }
+    }
+  }
+}

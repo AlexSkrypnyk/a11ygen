@@ -1,0 +1,51 @@
+{
+    "name": "@alexskrypnyk/a11ygen",
+    "version": "0.1.0",
+    "description": "Provides a11ygen functionality.",
+    "license": "GPL-2.0-or-later",
+    "author": {
+        "name": "Alex Skrypnyk",
+        "email": "a11ygen@alexskrypnyk.com",
+        "url": "https://alexskrypnyk.com"
+    },
+    "contributors": [],
+    "repository": "github:alexskrypnyk/a11ygen",
+    "bugs": "https://github.com/alexskrypnyk/a11ygen/issues",
+    "directories": {
+        "test": "tests"
+    },
+    "scripts": {
+        "lint": "grunt lint",
+        "lint-fix": "sass-lint-auto-fix",
+        "test": "echo Would run tests",
+        "build": "grunt",
+        "build-dev": "grunt dev",
+        "watch": "grunt watch-dev"
+    },
+    "engines": {
+        "npm": ">=8.0.0",
+        "node": ">=16.0.0"
+    },
+    "devDependencies": {
+        "autoprefixer": "^9.8.8",
+        "eslint": "^8.56.0",
+        "grunt": "^1.6.1",
+        "grunt-contrib-clean": "^2.0.1",
+        "grunt-contrib-concat": "^2.1.0",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-contrib-watch": "^1.1.0",
+        "grunt-exec": "^3.0.0",
+        "grunt-postcss": "^0.9.0",
+        "grunt-sass": "^3.1.0",
+        "grunt-sass-lint": "^0.2.4",
+        "gruntify-eslint": "^5.0.0",
+        "sass": "^1.69.7",
+        "sass-lint": "^1.13.1",
+        "sass-lint-auto-fix": "^0.21.2"
+    },
+    "browserslist": [
+        "last 2 versions",
+        "not ie <= 8",
+        "iOS >= 7"
+    ]
+}

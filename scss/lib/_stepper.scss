@@ -1,0 +1,61 @@
+@import "color";
+
+@function color-stepper($fg, $bg, $ratio, $step: 1%, $autodark: false) {
+  $max-steps: 1000 !default;
+  $original-contrast: color-contrast-ratio($fg, $bg);
+
+  @debug "FG: #{$fg}, BG: #{$bg}, Contrast: #{$original-contrast}";
+
+  @if $original-contrast < $ratio {
+    $fg-is-light: color-is-light($fg);
+    $bg-is-light: color-is-light($bg);
+
+    // Run through some cases where we want to darken, or use a negative step value.
+    @if $autodark {
+      @if $fg-is-light and $bg-is-light {
+        // Both are light colors, darken the FG.
+        $step: - $step;
+      } @else if not $fg-is-light and $bg-is-light {
+        // BG is light, FG is dark but does not pass => darken more.
+        $step: - $step;
+      } @else if $fg-is-light and not $bg-is-light {
+        // BG is dark, FG is light but does not pass => lighten more.
+        $step: $step;
+      } @else {
+        // Both are dark, so lighten the FG.
+        $step: $step;
+      }
+    }
+
+    $step-count: 1;
+    $contrast-ratio: 1;
+    @while $contrast-ratio < $ratio {
+      $sat-step: 0%;
+
+      @if saturation($fg) > 10 {
+        $sat-step: $step;
+      }
+
+      $fg: scale-color($fg, $lightness: $step, $saturation: $sat-step);
+      $contrast-ratio: color-contrast-ratio($fg, $bg);
+
+      $step-count: $step-count + 1;
+
+      @if ($step-count > $max-steps) {
+        @debug "Stopped: exceeded allowed max #{$max-steps} steps";
+        @return $fg;
+      }
+
+      @if ($fg == white) {
+        @debug "Stopped: reached white after #{$step-count} steps";
+        @return $fg;
+      }
+    }
+
+    @debug "Resolved: #{$fg} , Contrast: #{$contrast-ratio}  [ #{$step-count} steps]";
+  }
+
+  @return $fg;
+}
+
+
