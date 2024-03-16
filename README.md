@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
-  <img width=200px height=200px src="https://placehold.jp/000000/ffffff/200x200.png?text=Yourproject&css=%7B%22border-radius%22%3A%22%20100px%22%7D" alt="Yourproject logo"></a>
+  <img width=200px height=200px src="logo.png" alt="A11ygen logo"></a>
 </p>
 
 <h1 align="center">a11ygen</h1>
@@ -27,8 +27,7 @@ accessible colors *in the same hue* for borders and backgrounds.
 
 ## Features
 
-- SASS implementation
-- JS implementation - coming soon
+- SASS implementation. Can be included as a library.
 
 [See example](https://alexskrypnyk.github.io/a11ygen/)
 
