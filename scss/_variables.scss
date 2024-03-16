@@ -1,8 +1,13 @@
-$text-color: #000;
-$bg-color: #2852a3;
+$text-color-light: #000;
+$bg-color-light: #2752a3;
+$container-background-light: #fff;
+
+$text-color-dark: #fff;
+$bg-color-dark: #2752a3;
+$container-background-dark: #3a414a;
 
 $inner-to-outer-ratio: 2.5;
-$total-colors: 32;
+$total-colors: 8;
 
 $card-width: 200px;
 $card-height: $card-width;

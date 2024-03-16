@@ -1,236 +1,52 @@
 <html>
 <head>
-  <title>Colors</title>
+  <title>A11ygen - Color palettes</title>
   <link rel="stylesheet" href=".build/css/styles.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.min.js"></script>
 </head>
-<body class="card-container">
+<body>
 
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
+<script id="template" type="text/x-handlebars-template">
+  <div class="card-container light">
+    {{#times 32}}
+    <div class="card">
+      {{#times 4}}
+      <div class="inner">Text {{@number}}</div>
+      {{/times}}
+      OUTER TEXT
+    </div>
+    {{/times}}
+  </div>
+  <div class="card-container dark">
+    {{#times 32}}
+    <div class="card">
+      {{#times 4}}
+      <div class="inner">Text {{@number}}</div>
+      {{/times}}
+      OUTER TEXT
+    </div>
+    {{/times}}
+  </div>
+</script>
 
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
-<div class="card">
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  <div class="inner">Text</div>
-  OUTER TEXT
-</div>
+<script>
+  Handlebars.registerHelper('times', function (n, block) {
+    var html = '';
+    for (var i = 0; i < n; ++i) {
+      block.data.index = i;
+      block.data.number = i + 1;
+      block.data.first = i === 0;
+      block.data.last = i === (n - 1);
+      html += block.fn(this);
+    }
+    return html;
+  });
 
+  const source = document.getElementById("template").innerHTML;
+  const template = Handlebars.compile(source);
+  const html = template();
+  document.body.innerHTML += html;
+</script>
 
 </body>
 </html>

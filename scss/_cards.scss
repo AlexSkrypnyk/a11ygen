@@ -1,43 +1,61 @@
 @use "sass:math";
 @use "sass:color";
 
+body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+}
+
 .card-container {
   display: flex;
   flex-wrap: wrap;
   font-family: sans-serif;
   gap: 50px 50px;
-}
+  padding: 50px;
 
-.card {
-  @include generate-colors($total-colors);
-
-  color: $text-color;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: math.div($card-width, 20);
-
-  height: $card-height;
-  margin: math.div($card-width, 20);
-
-  margin-bottom: 150px;
-  padding: math.div($card-width, 10);
-
-  position: relative;
-
-  text-align: center;
-  width: $card-width;
-
-  .inner {
-    align-items: center;
-    border: solid 2px;
-    color: $text-color;
-
+  .card {
     display: flex;
-    flex: 0 0 calc(50% - 10px);
-    flex-direction: column;
-    justify-content: center;
-    max-width: calc(50% - 10px);
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: math.div($card-width, 20);
+
+    height: $card-height;
+    margin: math.div($card-width, 20);
+
+    margin-bottom: 150px;
+    padding: math.div($card-width, 10);
+
+    position: relative;
+
     text-align: center;
+    width: $card-width;
+
+    .inner {
+      align-items: center;
+      border: solid 2px;
+      display: flex;
+      flex: 0 0 calc(50% - 10px);
+      flex-direction: column;
+      justify-content: center;
+      max-width: calc(50% - 10px);
+      text-align: center;
+    }
+  }
+
+  &.light {
+    background-color: $container-background-light;
+
+    .card {
+      @include generate-colors($total-colors, $text-color-light, $bg-color-light);
+    }
+  }
+
+  &.dark {
+    background-color: $container-background-dark;
+
+    .card {
+      @include generate-colors($total-colors, $text-color-dark, $bg-color-dark, false);
+    }
   }
 }

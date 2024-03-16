@@ -3,38 +3,44 @@
 
 @import "lib/stepper";
 
-@mixin generate-colors($total-colors, $is_light_background: true) {
+@mixin generate-colors($total-colors, $text-color, $bg-color, $is_light_background: true) {
   $card-index: 0;
-  $hue-delta: math.div(360, $total-colors + 1);
   $index: 0;
+
+  // Hue delta for each card.
+  $hue-delta: math.div(360, $total-colors + 1);
 
   @for $card-index from 1 through $total-colors {
     &:nth-child(#{$card-index}) {
-      $outer: color.adjust($bg-color, $hue: $hue-delta * ($card-index - 1));
-      $inner: $outer;
-      $border: $outer;
+      $inner: color.adjust($bg-color, $hue: $hue-delta * ($card-index - 1));
+      $outer: $inner;
+      $border: $inner;
 
-      @debug '---------- #{$outer} [#{$card-index}] ----------';
+      @debug '---------- #{$inner} [#{$card-index}] ----------';
 
       // Normalise given colour from the top.
-      $inner: color-stepper($outer, $text-color, $ratio: 7, $autodark: true);
+      $inner: color-stepper($inner, $text-color, $ratio: 7, $autodark: true);
       // Calculate outer colour.
-      $outer: color-stepper($inner, $inner, $ratio: $inner-to-outer-ratio, $step: 1%);
+      //$outer: color-stepper($inner, $outer , $ratio: $inner-to-outer-ratio, $autodark: true);
+      $outer: color-stepper($inner, $outer , $ratio: $inner-to-outer-ratio);
       // Calculate border colour as a contrast to the inner colour.
       $border: color-stepper($inner, $outer, $ratio: 7, $autodark: true);
-
-      @if $card-index == 1 {
-        $color: $outer;
-      }
 
       background-color: $outer;
 
       .inner {
         background-color: $inner;
         border-color: $border;
+        color: $text-color;
       }
 
       @include show-values($outer, $border, $inner, $text-color);
+
+      // Set new inner colour to the corrected value so that the next card can
+      // use it.
+      @if $card-index == 1 {
+        $bg-color: $inner;
+      }
     }
   }
 }
@@ -49,14 +55,18 @@
     text-align: left;
     top: 100%;
     width: 100%;
+    background-color: white;
+    border: solid 2px black;
+    border-bottom: none;
+    margin-top: 10px;
   }
 
-  $ot: color-contrast-ratio($o, $text-color);
+  $ot: color-contrast-ratio($o, $t);
   @if $ot >= 7 {
     $ot: $ot + ' OK';
   }
 
-  $it: color-contrast-ratio($i, $text-color);
+  $it: color-contrast-ratio($i, $t);
   @if $it >= 7 {
     $it: $it + ' OK';
   }
@@ -76,9 +86,12 @@
         left: 0;
         position: absolute;
         text-align: left;
-        top: 105%;
+        top: 111%;
         white-space: pre;
         width: 100%;
+        background-color: white;
+        border: solid 2px black;
+        border-top: none;
       }
     }
   }
