@@ -30,7 +30,7 @@ accessible colors *in the same hue* for borders and backgrounds.
 - SASS implementation
 - JS implementation - coming soon
 
-[See example](colors.html)
+[See example](https://alexskrypnyk.github.io/a11ygen/)
 
 ## Roadmap
 
