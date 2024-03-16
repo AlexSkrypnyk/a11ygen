@@ -27,7 +27,7 @@
         "node": ">=16.0.0"
     },
     "devDependencies": {
-        "autoprefixer": "^9.8.8",
+        "autoprefixer": "^10.0.0",
         "eslint": "^8.56.0",
         "grunt": "^1.6.1",
         "grunt-contrib-clean": "^2.0.1",
