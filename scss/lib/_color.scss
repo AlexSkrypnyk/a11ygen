@@ -2,14 +2,14 @@
 
 @import "decimal";
 
-@function color-contrast-ratio($fg, $bg, $ratio: 0.05) {
-  $fg-lum: color-luminance($fg) +  0.05;
-  $bg-lum: color-luminance($bg) +  0.05;
+@function color-contrast-ratio($c1, $c2, $ratio: 0.05) {
+  $c1-lum: color-luminance($c1) +  0.05;
+  $c2-lum: color-luminance($c2) +  0.05;
 
-  @if $bg-lum > $fg-lum {
-    $ratio: math.div($bg-lum, $fg-lum);
+  @if $c2-lum > $c1-lum {
+    $ratio: math.div($c2-lum, $c1-lum);
   } @else {
-    $ratio: math.div($fg-lum, $bg-lum);
+    $ratio: math.div($c1-lum, $c2-lum);
   }
 
   $ratio: decimal-round($ratio, 2);
@@ -36,3 +36,33 @@
   }
 }
 
+@function color-contrast-string($c1, $c2, $ratio, $ok: ' \1F197', $fail: '\274C'){
+  $cr: color-contrast-ratio($c1, $c2);
+  $cr: decimal-round($cr, 2);
+  @if $cr >= $ratio {
+    $cr: $cr + $ok;
+  }
+  @else {
+    $cr: $cr + $fail;
+  }
+  @return $cr;
+}
+
+@function color-normalize-string($color) {
+  $color-string: $color + '';
+
+  $color-string: str-slice(#{to-lower-case($color-string)}, 2);
+
+  @if str-length($color-string) == 6 {
+    @return $color;
+  }
+
+  @if str-length($color-string) == 3 {
+    $r: str-slice($color-string, 1, 1);
+    $g: str-slice($color-string, 2, 2);
+    $b: str-slice($color-string, 3, 3);
+    @return '#' + unquote("#{$r}#{$r}#{$g}#{$g}#{$b}#{$b}");
+  }
+
+  @return $color;
+}

@@ -1,13 +1,21 @@
 $text-color-light: #000;
 $bg-color-light: #2752a3;
-$container-background-light: #fff;
+$container-bg-light: #fff;
 
 $text-color-dark: #fff;
 $bg-color-dark: #2752a3;
-$container-background-dark: #3a414a;
+$container-bg-dark: #3a414a;
 
-$inner-to-outer-ratio: 2.5;
-$total-colors: 8;
+// https://www.w3.org/WAI/WCAG21/Techniques/general/G209
+// If adjoining colors have less than 3:1 color contrast ratio difference add a
+// border with at least a 3:1 color contrast with each color.
+$ratio-text-to-bg: 9;
+$ratio-border: 3;
+$ratio-adjoining: 3;
+$ratio-inner-to-outer-light: 2;
+$ratio-inner-to-outer-dark: 1.5;
+
+$total-colors: 16;
 
 $card-width: 200px;
 $card-height: $card-width;

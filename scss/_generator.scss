@@ -3,96 +3,86 @@
 
 @import "lib/stepper";
 
-@mixin generate-colors($total-colors, $text-color, $bg-color, $is_light_background: true) {
+@mixin generate-colors($total-colors, $text-color, $bg-color, $container-bg, $ratio-inner-to-outer, $is_light_background: true, $step: 1%) {
   $card-index: 0;
   $index: 0;
 
-  // Hue delta for each card.
+  // Hue delta for each color.
   $hue-delta: math.div(360, $total-colors + 1);
+
+  $step-flip: 1;
+  @if $is_light_background {
+    $step-flip: -1;
+  }
 
   @for $card-index from 1 through $total-colors {
     &:nth-child(#{$card-index}) {
-      $inner: color.adjust($bg-color, $hue: $hue-delta * ($card-index - 1));
-      $outer: $inner;
-      $border: $inner;
+      $inner-text: $text-color;
+      $inner-bg: color.adjust($bg-color, $hue: $hue-delta * ($card-index - 1));
+      $inner-border: $inner-bg;
 
-      @debug '---------- #{$inner} [#{$card-index}] ----------';
+      $outer-text: $text-color;
+      $outer-bg: $inner-bg;
+      $outer-border: $outer-bg;
 
-      // Normalise given colour from the top.
-      $inner: color-stepper($inner, $text-color, $ratio: 7, $autodark: true);
-      // Calculate outer colour.
-      //$outer: color-stepper($inner, $outer , $ratio: $inner-to-outer-ratio, $autodark: true);
-      $outer: color-stepper($inner, $outer , $ratio: $inner-to-outer-ratio);
-      // Calculate border colour as a contrast to the inner colour.
-      $border: color-stepper($inner, $outer, $ratio: 7, $autodark: true);
+      @debug '---------- #{$inner-bg} [#{$card-index}] ----------';
 
-      background-color: $outer;
+      // Update inner bg color to be in a contrast ratio with the inner text color.
+      $inner-bg: color-stepper($inner-bg, $inner-text, $ratio-text-to-bg, $step-flip * -1 * $step);
+      // Calculate inner border color to be in a contrast with the inner bg color.
+      $inner-border: color-stepper($inner-border, $inner-bg, $ratio-border, $step-flip * 1 * $step);
+      // Calculate outer bg color to be in a contrast with the inner border color.
+      $outer-bg: color-stepper($outer-bg, $inner-border, $ratio-border, $step-flip * -1 * $step);
+      // Calculate outer bg color to be in a contrast with the inner bg color.
+      $outer-bg: color-stepper($outer-bg, $inner-bg, $ratio-inner-to-outer, $step-flip * -1 * $step);
+      // Calculate outer border color to be in a contrast with the container bg color.
+      $outer-border: color-stepper($outer-border, $container-bg, $ratio-border, $step-flip * 1 * $step);
+      $outer-border: color-stepper($outer-border, $outer-bg, $ratio-border, $step-flip * 1 * $step);
+
+      background-color: $outer-bg;
+      border-color: $outer-border;
+      color: $outer-text;
 
       .inner {
-        background-color: $inner;
-        border-color: $border;
-        color: $text-color;
+        background-color: $inner-bg;
+        border-color: $inner-border;
+        color: $inner-text;
       }
 
-      @include show-values($outer, $border, $inner, $text-color);
-
-      // Set new inner colour to the corrected value so that the next card can
-      // use it.
-      @if $card-index == 1 {
-        $bg-color: $inner;
-      }
+      @include show-values($inner-text, $inner-bg, $inner-border, $outer-text, $outer-bg, $outer-border, $container-bg, $ratio-inner-to-outer);
     }
   }
 }
 
-@mixin show-values($o, $b, $i, $t) {
+@mixin show-values($it, $i, $ib, $ot, $o, $ob, $c, $ratio-io) {
+  // @formatter:off
+  $content: '';
+  $content: $content + 'IT: ' + color-normalize-string($it)  + '\a';
+  $content: $content + 'I : ' + color-normalize-string($i)  + ' | I-IT : ' + color-contrast-string($i, $it, $ratio-text-to-bg) + '\a';
+  $content: $content + 'IB: ' + color-normalize-string($ib) + ' | IB-I: ' + color-contrast-string($ib, $i, $ratio-border) + '\a';
+  $content: $content + 'OT: ' + color-normalize-string($ot)  + '\a';
+  $content: $content + 'O : ' + color-normalize-string($o)  + ' | O-OT: ' + color-contrast-string($o, $ot, $ratio-text-to-bg) + '\a';
+  $content: $content + '            | O-IB: ' + color-contrast-string($o, $ib, $ratio-border) + '\a';
+  $content: $content + '            | O-I : ' + color-contrast-string($o, $i, $ratio-io) + '\a';
+  $content: $content + 'OB: ' + color-normalize-string($ob) + ' | OB-O: ' + color-contrast-string($ob, $o, $ratio-border) + '\a';
+  $content: $content + 'C : ' + color-normalize-string($c)  + ' | C-OB: ' + color-contrast-string($c, $ob, $ratio-border) + '\a';
+  $content: $content + '            | C-O : ' + color-contrast-string($c, $o, $ratio-adjoining, '', '') + '\a';
+  // @formatter:on
+
   &:after {
+    background-color: white;
+    border: solid 2px black;
+    box-sizing: border-box;
     color: #000000;
-    content: 'O: ' + $o;
+    content: $content;
     font-family: monospace;
     left: 0;
+    margin-top: 10px;
+    padding: 5px;
     position: absolute;
     text-align: left;
     top: 100%;
+    white-space: pre;
     width: 100%;
-    background-color: white;
-    border: solid 2px black;
-    border-bottom: none;
-    margin-top: 10px;
-  }
-
-  $ot: color-contrast-ratio($o, $t);
-  @if $ot >= 7 {
-    $ot: $ot + ' OK';
-  }
-
-  $it: color-contrast-ratio($i, $t);
-  @if $it >= 7 {
-    $it: $it + ' OK';
-  }
-
-  $contrast: 'O-B: ' + color-contrast-ratio($o, $b);
-  $contrast: $contrast + '\a I-B: ' + color-contrast-ratio($b, $i);
-  $contrast: $contrast + '\a O-I: ' + color-contrast-ratio($o, $i);
-  $contrast: $contrast + '\a O-T: ' + $ot;
-  $contrast: $contrast + '\a I-T: ' + $it;
-
-  .inner {
-    &:first-child {
-      &:after {
-        color: #000000;
-        content: 'B: ' + $b + '\a I: ' + $i + '\a' + $contrast;
-        font-family: monospace;
-        left: 0;
-        position: absolute;
-        text-align: left;
-        top: 111%;
-        white-space: pre;
-        width: 100%;
-        background-color: white;
-        border: solid 2px black;
-        border-top: none;
-      }
-    }
   }
 }
