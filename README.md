@@ -18,11 +18,11 @@
 
 ---
 
-<p align="center"> Generate a palette of accessible colours with borders and background.
+<p align="center"> Generate a palette of accessible colors with borders and background.
     <br>
 </p>
 
-Given a text and background colours, `a11ygen` will generate a palette of
+Given a text and background colors, `a11ygen` will generate a palette of
 accessible colors *in the same hue* for borders and backgrounds.
 
 ## Features

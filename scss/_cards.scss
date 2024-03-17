@@ -31,9 +31,11 @@ body {
     text-align: center;
     width: $card-width;
 
+    border: solid 1px;
+
     .inner {
       align-items: center;
-      border: solid 2px;
+      border: solid 1px;
       display: flex;
       flex: 0 0 calc(50% - 10px);
       flex-direction: column;
@@ -44,18 +46,18 @@ body {
   }
 
   &.light {
-    background-color: $container-background-light;
+    background-color: $container-bg-light;
 
     .card {
-      @include generate-colors($total-colors, $text-color-light, $bg-color-light);
+       @include generate-colors($total-colors, $text-color-light, $bg-color-light, $container-bg-light, $ratio-inner-to-outer-light);
     }
   }
 
   &.dark {
-    background-color: $container-background-dark;
+    background-color: $container-bg-dark;
 
     .card {
-      @include generate-colors($total-colors, $text-color-dark, $bg-color-dark, false);
+      @include generate-colors($total-colors, $text-color-dark, $bg-color-dark, $container-bg-dark, $ratio-inner-to-outer-dark, false);
     }
   }
 }
