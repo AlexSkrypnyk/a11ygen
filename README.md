@@ -35,3 +35,8 @@ accessible colors *in the same hue* for borders and backgrounds.
 
 - [ ] Add support for light and dark backgrounds
 - [ ] Add JS implementation
+
+
+## Example palettes
+
+![Palette of 32 colors](palettes/32.png)
